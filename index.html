@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>邵敬哲 · 作品集 — AIGC 内容生产 × 数据洞察 × 项目统筹</title>
+<meta name="description" content="邵敬哲 — 北师香港浸会大学传播学硕士。AIGC 内容生产、数据洞察与项目统筹复合型候选人。AI 短片《牛来自海上》从 180+ 支报名队伍晋级，经 50 支正赛入围阿那亚国际电影周海浪电影周主题活动黑客松终审 20 强。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="邵敬哲 · 作品集 — AIGC 内容生产 × 数据洞察 × 项目统筹">
+<meta property="og:description" content="AI 短片《牛来自海上》入围海浪电影周黑客松终审 20 强，独立完成全片 90%+ 画面生成。AIGC 内容生产 × 数据洞察 × 项目统筹。">
+<meta property="og:image" content="assets/og-card.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230C1015'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='36' fill='%23D4A24A' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+/* ============ 设计令牌 ============ */
+:root{
+  --bg:#0C1015;
+  --bg-soft:#11161D;
+  --bg-card:#131923;
+  --line:rgba(232,230,223,0.10);
+  --line-strong:rgba(232,230,223,0.18);
+  --text:#E9E6DF;
+  --text-dim:#98A1AE;
+  --text-faint:#7A8494;
+  --gold:#D4A24A;
+  --gold-soft:rgba(212,162,74,0.12);
+  --gold-line:rgba(212,162,74,0.38);
+  --serif:"Noto Serif SC","Songti SC","SimSun",serif;
+  --sans:"Space Grotesk","Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  --maxw:1120px;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--sans);
+  font-weight:400;
+  line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+::selection{background:var(--gold);color:#0C1015}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:2px}
+
+/* ============ 顶栏 ============ */
+header{
+  position:fixed;inset:0 0 auto 0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px clamp(20px,5vw,56px);
+  background:linear-gradient(180deg,rgba(12,16,21,.85),rgba(12,16,21,0));
+  backdrop-filter:blur(6px);
+  transition:background .4s var(--ease);
+}
+header.scrolled{background:rgba(12,16,21,.92);border-bottom:1px solid var(--line)}
+.brand{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.04em}
+.brand b{color:var(--gold);font-weight:700}
+nav{display:flex;gap:clamp(14px,2.5vw,28px);font-size:13.5px;letter-spacing:.06em;color:var(--text-dim)}
+nav a{position:relative;padding:4px 0;transition:color .3s}
+nav a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--gold);transition:width .35s var(--ease)}
+nav a:hover,nav a.active{color:var(--text)}
+nav a:hover::after,nav a.active::after{width:100%}
+
+/* ============ Hero ============ */
+.hero{
+  position:relative;min-height:100vh;min-height:100svh;
+  display:flex;align-items:center;
+  overflow:hidden;
+  background:var(--bg);
+}
+.hero::before{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 70% 55% at 15% 45%,rgba(212,162,74,0.10),transparent 60%),
+    radial-gradient(ellipse 50% 45% at 85% 35%,rgba(212,162,74,0.05),transparent 55%);
+  pointer-events:none;
+}
+.hero::after{
+  content:"";position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(232,230,223,0.025) 1px,transparent 1px);
+  background-size:26px 26px;
+  pointer-events:none;
+}
+.hero-inner{
+  position:relative;z-index:2;
+  width:min(var(--maxw),100%);
+  margin:0 auto;padding:0 clamp(20px,5vw,56px);
+  padding-top:80px;
+  display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.72fr);
+  gap:clamp(32px,5vw,64px);align-items:center;
+}
+/* Hero 右侧成果卡片堆 */
+.hero-visual{
+  position:relative;display:flex;flex-direction:column;gap:20px;
+  opacity:0;transform:translateY(26px);
+  animation:riseIn .9s var(--ease) .75s forwards;
+}
+.hero-visual::before{
+  content:"";position:absolute;inset:6% 2%;
+  background:radial-gradient(ellipse at center,rgba(212,162,74,.16),transparent 65%);
+  filter:blur(34px);pointer-events:none;
+}
+.hv-card{
+  position:relative;z-index:1;
+  background:rgba(19,25,35,.74);
+  border:1px solid var(--line-strong);
+  border-radius:16px;
+  padding:18px 24px;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  box-shadow:0 24px 60px rgba(0,0,0,.4);
+}
+.hv-card b{display:block;font-family:var(--serif);font-size:17px;font-weight:700;color:var(--text);line-height:1.4}
+.hv-card span{display:block;font-size:12.5px;color:var(--text-dim);margin-top:3px;letter-spacing:.02em}
+.hv-award{
+  display:flex;align-items:center;gap:14px;align-self:flex-start;
+  border-color:var(--gold-line);
+  animation:floatA 6s var(--ease) infinite;
+}
+.hv-award .hv-icon{
+  width:40px;height:40px;border-radius:11px;flex:none;
+  background:var(--gold-soft);border:1px solid var(--gold-line);
+  display:flex;align-items:center;justify-content:center;
+}
+.hv-award .hv-icon svg{width:20px;height:20px;color:var(--gold)}
+.hv-stats{
+  display:flex;gap:clamp(20px,2.2vw,34px);align-self:center;
+  padding:16px 28px;
+  animation:floatC 8s var(--ease) .5s infinite;
+}
+.hv-stats .hs b{font-family:var(--serif);font-size:clamp(20px,2.2vw,26px);color:var(--gold);font-weight:700;line-height:1.2}
+.hv-stats .hs span{font-size:11px;color:var(--text-faint);letter-spacing:.04em;margin-top:2px}
+.hv-tools{
+  align-self:flex-end;text-align:right;
+  animation:floatB 7s var(--ease) 1s infinite;
+}
+@keyframes floatA{0%,100%{transform:rotate(-2deg) translateY(0)}50%{transform:rotate(-2deg) translateY(-8px)}}
+@keyframes floatB{0%,100%{transform:rotate(1.6deg) translateY(0)}50%{transform:rotate(1.6deg) translateY(-8px)}}
+@keyframes floatC{0%,100%{transform:rotate(-.8deg) translateY(0)}50%{transform:rotate(-.8deg) translateY(-8px)}}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:12px;
+  font-size:12.5px;letter-spacing:.3em;color:var(--gold);
+  text-transform:uppercase;font-weight:500;
+}
+.eyebrow::before{content:"";width:34px;height:1px;background:var(--gold-line)}
+.hero h1{
+  font-family:var(--serif);font-weight:900;
+  font-size:clamp(54px,9vw,110px);
+  line-height:1.04;letter-spacing:.02em;
+  margin:26px 0 8px;
+}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero .role{
+  font-size:clamp(16px,2.2vw,21px);
+  color:var(--text);
+  font-weight:500;letter-spacing:.05em;
+  margin-bottom:22px;
+}
+.hero .role span{color:var(--gold);margin:0 6px}
+.hero .desc{
+  max-width:36em;
+  font-size:15.5px;color:var(--text-dim);
+  font-weight:300;
+  margin-bottom:34px;
+}
+.cta-row{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.cta{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:12px 26px;font-size:14.5px;letter-spacing:.08em;
+  border:1px solid var(--gold-line);color:var(--gold);
+  border-radius:999px;
+  transition:background .3s,color .3s,transform .3s var(--ease);
+}
+.cta:hover{background:var(--gold);color:#0C1015;transform:translateY(-2px)}
+.cta.ghost{border-color:var(--line-strong);color:var(--text-dim)}
+.cta.ghost:hover{border-color:var(--text);color:var(--text);background:transparent}
+.scroll-hint{
+  position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:2;
+  color:var(--text-faint);font-size:12px;letter-spacing:.3em;text-transform:uppercase;
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+}
+.scroll-hint::after{
+  content:"";width:1px;height:44px;
+  background:linear-gradient(180deg,var(--text-faint),transparent);
+  animation:drop 2.2s var(--ease) infinite;
+}
+@keyframes drop{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* hero 进入动画 */
+.hero .load{opacity:0;transform:translateY(26px);animation:riseIn .9s var(--ease) forwards}
+.hero .load:nth-child(1){animation-delay:.15s}
+.hero .load:nth-child(2){animation-delay:.32s}
+.hero .load:nth-child(3){animation-delay:.5s}
+.hero .load:nth-child(4){animation-delay:.66s}
+.hero .load:nth-child(5){animation-delay:.82s}
+@keyframes riseIn{to{opacity:1;transform:none}}
+
+/* ============ 通用板块 ============ */
+section.block{padding:clamp(88px,12vh,150px) 0;position:relative}
+.wrap{width:min(var(--maxw),100%);margin:0 auto;padding:0 clamp(20px,5vw,56px)}
+.sec-head{margin-bottom:clamp(36px,6vh,64px)}
+.sec-flag{
+  display:inline-flex;align-items:center;gap:12px;
+  font-size:12px;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:16px;
+}
+.sec-flag::before{content:"";width:26px;height:1px;background:var(--gold-line)}
+.sec-title{
+  font-family:var(--serif);font-weight:700;
+  font-size:clamp(28px,4.6vw,44px);line-height:1.22;
+  letter-spacing:.01em;
+}
+.sec-title .cn{display:block;font-size:clamp(15px,1.8vw,18px);font-weight:400;color:var(--text-dim);margin-top:10px;letter-spacing:.12em}
+
+/* 滚动揭示 */
+.reveal{opacity:0;transform:translateY(34px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.1s}.reveal.d2{transition-delay:.2s}.reveal.d3{transition-delay:.3s}
+
+/* 项目卡片 */
+.card{
+  background:var(--bg-card);
+  border:1px solid var(--line);
+  border-radius:16px;
+  overflow:hidden;
+  transition:border-color .35s,transform .35s var(--ease);
+}
+.card:hover{border-color:var(--gold-line);transform:translateY(-4px)}
+.card .media{position:relative;overflow:hidden;background:#0A0D12}
+.card .media img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+.card:hover .media img{transform:scale(1.03)}
+.card-body{padding:clamp(20px,3vw,30px)}
+.card h3{
+  font-family:var(--serif);font-size:clamp(19px,2.4vw,24px);
+  font-weight:700;margin-bottom:10px;line-height:1.35;
+}
+.card .meta{font-size:12px;letter-spacing:.16em;color:var(--gold);text-transform:uppercase;margin-bottom:12px}
+.card p{font-size:14.5px;color:var(--text-dim);font-weight:300;margin-bottom:16px}
+.tag{display:inline-block;font-size:13px;color:var(--text-dim);border:1px solid var(--line-strong);border-radius:999px;padding:4px 13px;margin:0 6px 6px 0;transition:color .3s,border-color .3s}
+.tag:hover{color:var(--gold);border-color:var(--gold-line)}
+.note{font-size:12.5px;color:var(--text-faint);margin-top:14px;letter-spacing:.02em}
+
+/* 源码 / 文档链接按钮 */
+.link-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:13px;letter-spacing:.06em;color:var(--gold);
+  border:1px solid var(--gold-line);border-radius:999px;
+  padding:7px 18px;margin:4px 8px 4px 0;
+  transition:background .3s,color .3s,transform .3s var(--ease);
+}
+.link-btn:hover{background:var(--gold);color:#0C1015;transform:translateY(-1px)}
+.link-btn svg{width:14px;height:14px;flex:none}
+
+/* ============ 板块 · 实践经历 ============ */
+.exp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2.5vw,24px);align-items:start}
+.exp-card{
+  border:1px solid var(--line);border-radius:16px;
+  padding:clamp(22px,3vw,30px);background:var(--bg-card);
+  transition:border-color .35s,transform .35s var(--ease);
+  height:100%;
+}
+.exp-card:hover{border-color:var(--gold-line);transform:translateY(-4px)}
+.exp-card .exp-role{font-size:12px;letter-spacing:.16em;color:var(--gold);text-transform:uppercase;margin-bottom:6px}
+.exp-card h3{font-family:var(--serif);font-size:clamp(17px,2vw,20px);font-weight:700;margin-bottom:4px;line-height:1.35}
+.exp-card .exp-time{font-size:12px;color:var(--text-faint);margin-bottom:14px}
+.exp-card ul{list-style:none;display:grid;gap:7px;margin-bottom:14px}
+.exp-card li{font-size:13.5px;color:var(--text-dim);padding-left:18px;position:relative;line-height:1.65}
+.exp-card li::before{content:"";position:absolute;left:2px;top:9px;width:5px;height:5px;background:var(--gold);border-radius:1px;transform:rotate(45deg)}
+.exp-card li b{color:var(--text);font-weight:500}
+
+/* 研究补充证据卡片 */
+.research-more{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2.5vw,24px);margin-top:clamp(24px,3.5vw,40px)}
+.rm-card{border:1px solid var(--line);border-radius:14px;padding:clamp(18px,2.5vw,26px);background:var(--bg-card)}
+.rm-card .rm-tag{font-size:11.5px;letter-spacing:.16em;color:var(--gold);text-transform:uppercase;margin-bottom:8px}
+.rm-card h4{font-family:var(--serif);font-size:17px;font-weight:700;margin-bottom:8px}
+.rm-card p{font-size:13.5px;color:var(--text-dim);font-weight:300;line-height:1.7}
+
+/* 分隔线 */
+.divider{height:1px;background:linear-gradient(90deg,var(--line),transparent);margin:0 auto;width:min(var(--maxw),100%)}
+
+/* ============ 板块 · 个人简介 ============ */
+.about-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(30px,5vw,56px);align-items:start}
+.about-text .lead{
+  font-family:var(--serif);font-size:clamp(19px,2.4vw,25px);font-weight:700;
+  line-height:1.5;margin-bottom:18px;
+}
+.about-text .lead em{font-style:normal;color:var(--gold)}
+.about-text p{font-size:14.5px;color:var(--text-dim);font-weight:300;margin-bottom:14px;line-height:1.8}
+.about-text p b{color:var(--text);font-weight:500}
+.about-edu{
+  border:1px solid var(--line);border-radius:14px;padding:clamp(22px,3vw,32px);
+  background:var(--bg-card);
+}
+.about-edu .edu-label{
+  font-size:11.5px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:16px;
+}
+.about-edu .edu-school{
+  font-family:var(--serif);font-size:clamp(17px,2vw,20px);font-weight:700;margin-bottom:4px;
+}
+.about-edu .edu-degree{font-size:13.5px;color:var(--text-dim);margin-bottom:16px}
+.about-edu .edu-track{
+  font-size:13px;color:var(--text-faint);padding-top:14px;border-top:1px solid var(--line);
+}
+.stats-row{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(16px,2vw,28px);
+  margin-top:clamp(30px,5vw,50px);
+}
+.stat{text-align:center;border-top:1px solid var(--gold-line);padding-top:16px}
+.stat b{
+  display:block;font-family:var(--serif);font-size:clamp(22px,2.8vw,32px);
+  color:var(--text);font-weight:700;line-height:1.2;
+}
+.stat span{font-size:11.5px;color:var(--text-faint);letter-spacing:.08em;margin-top:4px;display:block}
+
+/* ============ 板块 · 技能总览 ============ */
+.skill-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2.5vw,24px)}
+.skill-card{
+  border:1px solid var(--line);border-radius:16px;
+  padding:clamp(24px,3vw,36px);background:var(--bg-card);
+  transition:border-color .35s,transform .35s var(--ease);
+  position:relative;overflow:hidden;
+}
+.skill-card:hover{border-color:var(--gold-line);transform:translateY(-4px)}
+.skill-card .skill-icon{
+  width:40px;height:40px;border-radius:10px;
+  background:var(--gold-soft);border:1px solid var(--gold-line);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:18px;
+}
+.skill-card .skill-icon svg{width:20px;height:20px;color:var(--gold)}
+.skill-card .skill-num{
+  position:absolute;top:22px;right:26px;
+  font-family:var(--serif);font-size:14px;color:var(--text-faint);
+}
+.skill-card h3{
+  font-family:var(--serif);font-size:clamp(17px,2.2vw,21px);font-weight:700;margin-bottom:8px;
+}
+.skill-card .skill-sub{font-size:12px;color:var(--gold);letter-spacing:.1em;margin-bottom:12px}
+.skill-card p{font-size:13.5px;color:var(--text-dim);font-weight:300;margin-bottom:14px;line-height:1.7}
+.skill-card .skill-tags{display:flex;flex-wrap:wrap;gap:8px}
+.skill-card .skill-tags .tag{font-size:12px;margin:0}
+
+/* ============ 板块 · 效率工具 ============ */
+.tool-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(20px,3vw,36px);align-items:start}
+.tool-main{display:grid;gap:16px}
+.tool-shot{position:relative;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#0A0D12}
+.tool-shot img{width:100%;object-fit:cover;transition:transform .7s var(--ease)}
+.tool-shot:hover img{transform:scale(1.02)}
+.tool-shot .shot-tag{position:absolute;top:12px;left:12px;font-size:11px;letter-spacing:.12em;color:var(--gold);background:rgba(12,16,21,.82);border:1px solid var(--gold-line);padding:3px 10px;border-radius:999px}
+.tool-side{display:grid;gap:16px;grid-template-rows:auto auto}
+.tool-mini{position:relative;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--bg-card)}
+.tool-mini img{width:100%;max-height:220px;object-fit:contain;background:#0A0D12}
+.tool-mini .cap{padding:14px 18px;font-size:13px;color:var(--text-dim)}
+.tool-mini .cap b{color:var(--text);font-weight:500}
+
+/* ============ 板块 · 商业分析 ============ */
+.biz-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,3vw,36px)}
+.biz-card .media{aspect-ratio:16/10}
+.biz-card .kpis{display:flex;gap:clamp(16px,2.5vw,30px);margin:6px 0 16px;flex-wrap:wrap}
+.kpi b{display:block;font-family:var(--serif);font-size:clamp(20px,2.4vw,28px);color:var(--text);font-weight:700;line-height:1.2}
+.kpi span{font-size:11.5px;color:var(--text-faint);letter-spacing:.08em}
+
+/* ============ 板块 · AI 内容 ============ */
+.ai-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(20px,3vw,36px);align-items:stretch}
+.ai-grid>*{min-width:0}
+.video-card{width:100%;aspect-ratio:16/9;position:relative;cursor:pointer}
+.video-card video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
+.video-card .playbtn{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:rgba(12,16,21,.45);transition:background .4s;
+}
+.video-card .playbtn svg{width:64px;height:64px;color:#fff;filter:drop-shadow(0 4px 18px rgba(0,0,0,.5));transition:transform .35s var(--ease)}
+.video-card:hover .playbtn{background:rgba(12,16,21,.28)}
+.video-card:hover .playbtn svg{transform:scale(1.08)}
+.video-card .dur{
+  position:absolute;right:14px;bottom:12px;z-index:2;
+  font-size:13px;letter-spacing:.1em;color:#fff;background:rgba(12,16,21,.72);
+  padding:3px 9px;border-radius:6px;font-variant-numeric:tabular-nums;
+}
+.video-card.playing .playbtn{opacity:0;pointer-events:none}
+.award-badge{
+  position:absolute;top:14px;left:14px;z-index:3;
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12px;letter-spacing:.08em;font-weight:500;
+  color:var(--gold);background:rgba(12,16,21,.85);
+  border:1px solid var(--gold-line);border-radius:999px;
+  padding:6px 14px;backdrop-filter:blur(6px);
+}
+.award-badge svg{width:14px;height:14px;color:var(--gold);flex:none}
+.award-line{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:14px;color:var(--text);font-weight:500;
+  border:1px solid var(--gold-line);background:var(--gold-soft);
+  border-radius:10px;padding:10px 16px;margin-bottom:16px;
+}
+.award-line svg{width:16px;height:16px;color:var(--gold);flex:none}
+.award-line b{color:var(--gold)}
+.still-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:clamp(22px,3vw,34px)}
+.still-grid figure{position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:#0A0D12}
+.still-grid img{width:100%;aspect-ratio:4/3;object-fit:cover;transition:transform .7s var(--ease)}
+.still-grid figure:hover img{transform:scale(1.06)}
+.still-grid figcaption{
+  position:absolute;left:0;right:0;bottom:0;padding:18px 10px 8px;
+  font-size:11px;color:rgba(255,255,255,.85);
+  background:linear-gradient(0deg,rgba(8,10,14,.92),transparent);
+}
+.ai-detail h3{font-family:var(--serif);font-size:clamp(20px,2.6vw,27px);font-weight:700;margin-bottom:8px;line-height:1.4}
+.ai-detail .sub{font-size:13px;color:var(--gold);letter-spacing:.1em;margin-bottom:16px}
+.ai-detail p{font-size:14.5px;color:var(--text-dim);font-weight:300;margin-bottom:12px}
+.ai-detail ul{list-style:none;margin:14px 0 20px;display:grid;gap:8px}
+.ai-detail li{font-size:14px;color:var(--text-dim);padding-left:22px;position:relative}
+.ai-detail li::before{content:"";position:absolute;left:2px;top:9px;width:6px;height:6px;background:var(--gold);border-radius:1px;transform:rotate(45deg)}
+.ai-detail li b{color:var(--text);font-weight:500}
+
+/* ============ 板块 · 学术研究 ============ */
+.research{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(20px,3vw,44px);align-items:start}
+.research .desc-side h3{font-family:var(--serif);font-size:clamp(20px,2.6vw,27px);font-weight:700;margin-bottom:12px;line-height:1.4}
+.research .desc-side p{font-size:14.5px;color:var(--text-dim);font-weight:300;margin-bottom:14px}
+.research .desc-side ul{list-style:none;display:grid;gap:8px;margin-bottom:20px}
+.research .desc-side li{font-size:14px;color:var(--text-dim);padding-left:22px;position:relative}
+.research .desc-side li::before{content:"";position:absolute;left:2px;top:9px;width:6px;height:6px;background:var(--gold);border-radius:1px;transform:rotate(45deg)}
+.research .desc-side li b{color:var(--text);font-weight:500}
+.paper-stack{display:grid;gap:14px}
+.paper{position:relative;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--bg-card);transition:border-color .35s}
+.paper:hover{border-color:var(--gold-line)}
+.paper img{width:100%;max-height:420px;object-fit:contain;background:#0A0D12}
+.paper .paper-tag{position:absolute;top:12px;left:12px;font-size:11px;letter-spacing:.12em;color:var(--gold);background:rgba(12,16,21,.82);border:1px solid var(--gold-line);padding:3px 10px;border-radius:999px;backdrop-filter:blur(4px)}
+
+/* ============ 底部 ============ */
+footer{
+  border-top:1px solid var(--line);
+  padding:clamp(60px,9vh,100px) 0 40px;
+  background:linear-gradient(180deg,transparent,rgba(212,162,74,.04));
+}
+.foot-grid{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap;margin-bottom:52px}
+.foot-left{max-width:26em}
+.foot-left h2{font-family:var(--serif);font-size:clamp(26px,4vw,40px);font-weight:700;line-height:1.3;margin-bottom:14px}
+.foot-left p{font-size:14.5px;color:var(--text-dim);font-weight:300}
+.foot-right{display:grid;gap:14px;align-content:start}
+.foot-right a{
+  display:flex;align-items:center;gap:10px;
+  font-size:15px;color:var(--text-dim);
+  transition:color .3s;
+}
+.foot-right a:hover{color:var(--gold)}
+.foot-right svg{width:16px;height:16px;stroke:var(--gold);flex:none}
+.foot-meta{border-top:1px solid var(--line);padding-top:22px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--text-faint);letter-spacing:.05em}
+
+/* ============ 响应式 ============ */
+@media (max-width:920px){
+  .ai-grid,.biz-grid,.tool-grid,.research,.about-grid{grid-template-columns:1fr}
+  .skill-grid,.exp-grid,.research-more{grid-template-columns:1fr}
+  .tool-side{grid-template-columns:1fr 1fr}
+  .video-card{aspect-ratio:16/10}
+  .stats-row{grid-template-columns:repeat(2,1fr);gap:20px}
+  .hero-inner{grid-template-columns:1fr}
+  .hero-visual{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+    opacity:1;transform:none;animation:none;
+  }
+  .hero-visual .hv-card{padding:12px 14px;box-shadow:none;border-radius:12px;animation:none}
+  .hero-visual .hv-card b{font-size:14px}
+  .hero-visual .hv-card span{font-size:10.5px}
+  .hv-award{flex-direction:column;align-items:flex-start;gap:8px}
+  .hv-award .hv-icon{width:30px;height:30px;border-radius:8px}
+  .hv-award .hv-icon svg{width:16px;height:16px}
+  .hv-stats{gap:10px;padding:12px 10px;justify-content:space-around;animation:none}
+}
+@media (max-width:640px){
+  header{padding:14px 18px;gap:8px}
+  nav{gap:8px;font-size:12px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none;white-space:nowrap}
+  nav::-webkit-scrollbar{display:none}
+  nav a{min-height:44px;min-width:44px;display:inline-flex;align-items:center;justify-content:center}
+  .brand{min-height:44px;display:inline-flex;align-items:center;flex:none;white-space:nowrap;font-size:16px}
+  .foot-right a{min-height:44px;align-items:center}
+  .hero-inner{padding-top:110px}
+  .still-grid{grid-template-columns:repeat(2,1fr)}
+  .tool-side{grid-template-columns:1fr}
+  .skill-grid{grid-template-columns:1fr}
+  .foot-grid{flex-direction:column}
+  .stats-row{grid-template-columns:repeat(2,1fr)}
+  .hero-visual{grid-template-columns:repeat(2,1fr)}
+  .hero-visual .hv-tools{display:none}
+  .hv-award{grid-column:1/-1;flex-direction:row;align-items:center}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+  .hero .load,.reveal,.hero-visual{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<header id="topbar">
+  <a class="brand" href="#top">邵敬哲<span style="color:var(--gold)">.</span></a>
+  <nav aria-label="主导航">
+    <a href="#about" data-nav>简介</a>
+    <a href="#experience" data-nav>实践</a>
+    <a href="#skills" data-nav>技能</a>
+    <a href="#tools" data-nav>原型</a>
+    <a href="#biz" data-nav>分析</a>
+    <a href="#ai" data-nav>创作</a>
+    <a href="#research" data-nav>研究</a>
+    <a href="#contact" data-nav>联系</a>
+  </nav>
+</header>
+
+<!-- ===================== Hero ===================== -->
+<section class="hero" id="top">
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <span class="eyebrow load">AIGC 内容生产 × 数据洞察 × 项目统筹</span>
+      <h1 class="load">邵敬哲</h1>
+      <p class="role load">AIGC 内容生产 <span>·</span> 新媒体运营 <span>·</span> 项目运营</p>
+      <p class="desc load">AI 短片《牛来自海上》从 180+ 支报名队伍中晋级，经 50 支正赛入围阿那亚国际电影周海浪电影周主题活动黑客松终审 20 强——我作为核心创作者独立完成全片 90% 以上画面生成，并主导分镜设计与提示词工程；同时具备用户研究、数据分析与大型活动统筹的实践积累。</p>
+      <div class="cta-row load">
+        <a class="cta" href="#about">浏览作品
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="cta ghost" href="assets/resume.pdf" download>下载简历 PDF</a>
+      </div>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <div class="hv-card hv-award">
+        <span class="hv-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.5 13 17 22l-5-3-5 3 1.5-9"/></svg>
+        </span>
+        <div>
+          <b>阿那亚国际电影周</b>
+          <span>海浪电影周主题活动 · 黑客松终审 20 强</span>
+        </div>
+      </div>
+      <div class="hv-card hv-stats">
+        <div class="hs"><b>90%+</b><span>AI 画面生成占比</span></div>
+        <div class="hs"><b>15+</b><span>场活动统筹</span></div>
+        <div class="hs"><b>3075</b><span>行自研代码</span></div>
+      </div>
+      <div class="hv-card hv-tools">
+        <b>2 款自研工具</b>
+        <span>岗位筛选系统 · PasteFlow（macOS）</span>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint" aria-hidden="true">Scroll</div>
+</section>
+
+<!-- ===================== 板块 · 个人简介 ===================== -->
+<section class="block" id="about">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-flag">About</span>
+      <h2 class="sec-title">个人简介<span class="cn">教育背景 · 求职定位 · 关键成果</span></h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p class="lead">不是单一赛道的<em>专才</em>，而是能打通<em>内容、技术与研究</em>的复合型候选人。</p>
+        <p>北师香港浸会大学（BNBU）传播学硕士，传媒管理方向。在读期间跨越 <b>AI 内容创作</b>、<b>商业分析</b>、<b>学术研究</b> 与 <b>工具开发</b> 四个领域——不是浅尝辄止，而是每个领域都有可展示的成果。</p>
+        <p>AI 短片《牛来自海上》从 180+ 支报名队伍晋级，经 50 支正赛<b>入围阿那亚国际电影周海浪电影周主题活动黑客松终审 20 强</b>，我作为核心创作者独立完成全片 90% 以上画面生成与分镜设计；独立开发岗位信息智能筛查系统，把人工筛岗的数小时压缩到分钟级；学术研究上，围绕社交媒体隐私行为搭建理论模型并提出 13 条研究假设。</p>
+        <p>以传播学训练为底层逻辑，以技术执行力为杠杆，寻找新媒体运营 / 内容营销（AIGC 方向）与项目运营方向的机会。</p>
+      </div>
+      <div class="about-edu reveal d1">
+        <div class="edu-label">Education</div>
+        <div class="edu-school">北师香港浸会大学</div>
+        <div class="edu-degree">BNBU · 传播学（传媒管理方向）硕士</div>
+        <div class="edu-track">2023.09–2025.10 · GPA 3.44 / 4.0<br>全英文授课 · 学历学位已认证</div>
+      </div>
+    </div>
+    <div class="stats-row reveal d2">
+      <div class="stat"><b>硕士</b><span>传播学 · 传媒管理</span></div>
+      <div class="stat"><b>2 个</b><span>自研可运行工具</span></div>
+      <div class="stat"><b>90%+</b><span>AI 画面生成占比</span></div>
+      <div class="stat"><b>15+</b><span>场活动统筹</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 板块 · 实践经历 ===================== -->
+<section class="block" id="experience">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-flag">Experience</span>
+      <h2 class="sec-title">实践经历<span class="cn">活动统筹 · 用户研究 · 团队协作的现场证据</span></h2>
+    </div>
+    <div class="exp-grid">
+      <article class="exp-card reveal">
+        <div class="exp-role">实习 · 策划与编导</div>
+        <h3>长沙市特殊教育学校 · 市级展演统筹</h3>
+        <div class="exp-time">2022.09 – 2022.12 · 教育实习</div>
+        <ul>
+          <li>与校方共同担任市级“友子梦”展演<b>导演与编导</b>，设定整场叙事主线与 20 个节目编排逻辑，于<b>梅溪湖大剧院公演</b></li>
+          <li>落地无障碍舞台方案：灯光提示替代音效、触觉节拍器辅助排练</li>
+          <li>分层拆解 <b>300+ 师生</b>排练任务，化解 4 次时间冲突，20 个节目<b>零延误、零失误</b>，获校方“优秀实习统筹”评价</li>
+        </ul>
+        <div><span class="tag">活动统筹</span><span class="tag">节目编排</span><span class="tag">无障碍设计</span></div>
+      </article>
+      <article class="exp-card reveal d1">
+        <div class="exp-role">实习 · 市场营销</div>
+        <h3>连云港亚纳科技 · 用户研究与营销</h3>
+        <div class="exp-time">2021.07 – 2021.09 · 市场部营销实习生</div>
+        <ul>
+          <li>设计“社群问卷 + 1v1 访谈”反馈路径，清洗 <b>500+ 条</b>用户数据，SPSS 聚类输出 <b>3 类客群画像</b></li>
+          <li>按人群分层设计内容触达矩阵，执行 3 轮精准营销活动，社群规模 3 个月增长 <b>20%</b>（500→600）</li>
+          <li>输出《用户需求优先级清单》反哺产品迭代</li>
+        </ul>
+        <div><span class="tag">用户研究</span><span class="tag">SPSS</span><span class="tag">社群营销</span></div>
+      </article>
+      <article class="exp-card reveal d2">
+        <div class="exp-role">校园 · 学生干部</div>
+        <h3>校学生会文体部部长 · 新生副班主任</h3>
+        <div class="exp-time">2020.09 – 2023.06 · 南京特殊教育师范学院</div>
+        <ul>
+          <li>统筹 <b>15+ 场</b>校级文体活动（迎新晚会、校园歌手大赛等）全流程策划，搭建 <b>20 人</b>执行团队并建立跨部门协作机制</li>
+          <li>部门连续 2 年获评<b>“校级优秀学生组织”</b></li>
+          <li>志愿服务 200+ 小时，3 次获评校级“优秀志愿者”，主导志愿项目获市级提名</li>
+        </ul>
+        <div><span class="tag">活动策划</span><span class="tag">团队管理</span><span class="tag">流程与风险预案</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<div class="divider" aria-hidden="true"></div>
+
+<!-- ===================== 板块 · 技能总览 ===================== -->
+<section class="block" id="skills">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-flag">Skill Map</span>
+      <h2 class="sec-title">技能总览<span class="cn">四大能力象限 · 传播学为底层 · 技术为杠杆</span></h2>
+    </div>
+    <div class="skill-grid">
+      <div class="skill-card reveal">
+        <div class="skill-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <span class="skill-num">01</span>
+        <h3>AI 内容创作</h3>
+        <div class="skill-sub">AI 工业化内容生产</div>
+        <p>从文物考据到角色锚定，从分镜文案到渲染成片。独立完成 AI 短片主要画面生成，掌握 AI 内容生产全流程。</p>
+        <div class="skill-tags">
+          <span class="tag">即梦 Seedance</span><span class="tag">豆包</span><span class="tag">DeepSeek</span><span class="tag">剪映</span>
+        </div>
+      </div>
+      <div class="skill-card reveal d1">
+        <div class="skill-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18"/><path d="M7 14l3-4 4 3 5-7"/></svg>
+        </div>
+        <span class="skill-num">02</span>
+        <h3>商业分析</h3>
+        <div class="skill-sub">全链路营销分析</div>
+        <p>PESTEL → SWOT → 消费者行为 → 营销活动设计 → ROI 评估。作为队长主导小组完成巴黎世家中国市场分析。</p>
+        <div class="skill-tags">
+          <span class="tag">PESTEL</span><span class="tag">SWOT</span><span class="tag">ROI 评估</span><span class="tag">消费者行为</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </div>
+        <span class="skill-num">03</span>
+        <h3>学术研究</h3>
+        <div class="skill-sub">用户行为研究设计</div>
+        <p>搭建"焦虑→隐私评估→自我表露→使用行为"理论模型，提出 13 条研究假设，掌握问卷设计与量化分析。</p>
+        <div class="skill-tags">
+          <span class="tag">问卷设计</span><span class="tag">SPSS</span><span class="tag">AMOS</span><span class="tag">霍桑效应</span>
+        </div>
+      </div>
+      <div class="skill-card reveal d1">
+        <div class="skill-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <span class="skill-num">04</span>
+        <h3>效率工具开发</h3>
+        <div class="skill-sub">从需求到交付的全流程</div>
+        <p>两个独立完成的效率工具实验：信息筛选与匹配原型，以及 macOS 剪贴板历史工具 PasteFlow，体现从需求拆解到可用原型的执行能力。</p>
+        <div class="skill-tags">
+          <span class="tag">Python</span><span class="tag">Swift</span><span class="tag">Flask</span><span class="tag">SwiftUI</span><span class="tag">SQLite</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider" aria-hidden="true"></div>
+
+<!-- ===================== 板块 · 效率工具实验 ===================== -->
+<section class="block" id="tools">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-flag">Product Experiments</span>
+      <h2 class="sec-title">效率工具实验<span class="cn">将复杂流程拆解为清晰、可用的原型</span></h2>
+    </div>
+    <div class="tool-grid">
+      <article class="card reveal">
+        <div class="media">
+          <img src="assets/tool_gangwei.webp" alt="岗位信息智能筛查系统界面" loading="lazy" style="aspect-ratio:16/10;object-fit:cover">
+        </div>
+        <div class="card-body">
+          <div class="meta">Python · Flask · Web · 3075 行</div>
+          <h3>岗位信息智能筛查系统</h3>
+          <p>面向求职筛选场景自研的 Web 应用：<strong style="color:var(--text)">简历解析、JD 关键词匹配、岗位优先级排序</strong>三大模块，数据覆盖国聘、24365、拉勾、猎聘、牛客、应届生六大平台，把人工筛选岗位的时间从数小时压缩到分钟级。</p>
+          <div>
+            <span class="tag">Python</span><span class="tag">Flask</span><span class="tag">SQLite</span><span class="tag">爬虫</span><span class="tag">匹配算法</span>
+          </div>
+          <p class="note">独立实践 · 3075 行代码 · 演示数据为内置样本</p>
+          <a class="link-btn" href="https://github.com/PLACEHOLDER/gangwei-screener" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c2.9-.3 6-1.4 6-6.5a5 5 0 0 0-1.4-3.5 4.7 4.7 0 0 0-.1-3.4s-1.1-.4-3.6 1.3a12.3 12.3 0 0 0-6.5 0C6.9 1.6 5.8 2 5.8 2a4.7 4.7 0 0 0-.1 3.4A5 5 0 0 0 4.3 8.9c0 5 3.1 6.2 6 6.5a3.4 3.4 0 0 0-1 2.6V22"/></svg>
+            查看源码
+          </a>
+        </div>
+      </article>
+      <article class="card reveal d1">
+        <div class="media">
+          <img src="assets/pasteflow.webp" alt="PasteFlow 剪贴板历史面板" loading="lazy" style="aspect-ratio:4/3;object-fit:cover">
+        </div>
+        <div class="card-body">
+          <div class="meta">Swift · macOS · Utility</div>
+          <h3>PasteFlow 剪贴板历史工具</h3>
+          <p>针对高频复制粘贴场景的 macOS 菜单栏工具：历史记录、搜索回贴、菜单栏常驻。纯原生 Swift + SwiftUI 开发，零第三方依赖，完整走通需求定义、架构设计（MVVM + Service 层）、开发与打包交付（.dmg）。</p>
+          <div>
+            <span class="tag">Swift</span><span class="tag">SwiftUI</span><span class="tag">MVVM</span><span class="tag">AppKit</span><span class="tag">打包交付</span>
+          </div>
+          <p class="note">独立实践 · 纯原生实现 · macOS 14+ · 安装包见 Release</p>
+          <a class="link-btn" href="https://github.com/PLACEHOLDER/PasteFlow" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c2.9-.3 6-1.4 6-6.5a5 5 0 0 0-1.4-3.5 4.7 4.7 0 0 0-.1-3.4s-1.1-.4-3.6 1.3a12.3 12.3 0 0 0-6.5 0C6.9 1.6 5.8 2 5.8 2a4.7 4.7 0 0 0-.1 3.4A5 5 0 0 0 4.3 8.9c0 5 3.1 6.2 6 6.5a3.4 3.4 0 0 0-1 2.6V22"/></svg>
+            查看源码
+          </a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<div class="divider" aria-hidden="true"></div>
+
+<!-- ===================== 板块 · 商业分析 ===================== -->
+<section class="block" id="biz">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-flag">Business Analysis</span>
+      <h2 class="sec-title">商业分析<span class="cn">品牌营销案例 · 国家级媒体数字化转型</span></h2>
+    </div>
+    <div class="biz-grid">
+      <article class="card biz-card reveal">
+        <div class="media">
+          <img src="assets/cover_balenciaga.webp" alt="巴黎世家中国市场营销案例分析封面" loading="lazy">
+        </div>
+        <div class="card-body">
+          <div class="meta">Group Project · Team Lead</div>
+          <h3>巴黎世家（开云集团）中国市场营销案例</h3>
+          <p>作为团队队长，负责<strong style="color:var(--text)">数据收集与汇总</strong>，在获取小组资料后提出优化建议。完整走通 PESTEL → SWOT → 消费者行为分析 → "艺术融合"营销活动设计的分析链路，含 2000 万美元预算方案与 ROI 评估。</p>
+          <div class="kpis">
+            <div class="kpi"><b>队长</b><span>数据与汇总</span></div>
+            <div class="kpi"><b>PESTEL→ROI</b><span>全链路分析</span></div>
+            <div class="kpi"><b>2000 万美元</b><span>活动预算方案</span></div>
+          </div>
+          <div>
+            <span class="tag">市场进入策略</span><span class="tag">消费者行为</span><span class="tag">活动设计</span>
+          </div>
+        </div>
+      </article>
+      <article class="card biz-card reveal d1">
+        <div class="media">
+          <img src="assets/cover_news_thesis.webp" alt="央视频 8K VR 观赛冬奥应用分析封面" loading="lazy">
+        </div>
+        <div class="card-body">
+          <div class="meta">Media Management · Course Case</div>
+          <h3>央视频 8K VR 观赛 · 冬奥应用分析</h3>
+          <p>传媒管理课程案例研究，聚焦国家级媒体数字化转型：从 8K/VR 观赛体验切入，分析 AI 剪辑提效、话题传播与文旅联动的创新与局限。</p>
+          <div class="kpis">
+            <div class="kpi"><b>40%</b><span>AI 剪辑提效</span></div>
+            <div class="kpi"><b>12 亿</b><span>话题播放量</span></div>
+            <div class="kpi"><b>5000 万</b><span>文旅消费带动</span></div>
+          </div>
+          <div>
+            <span class="tag">媒体数字化转型</span><span class="tag">8K/VR</span><span class="tag">AI 剪辑</span>
+          </div>
+          <p class="note">课程案例 · 数据引自公开报道，面试可提供口径来源。</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<div class="divider" aria-hidden="true"></div>
+
+<!-- ===================== 板块 · AI 内容创作 ===================== -->
+<section class="block" id="ai">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-flag">AI Content</span>
+      <h2 class="sec-title">AI 内容创作<span class="cn">AI 影像工业化流程 · 从文物考据到成片渲染</span></h2>
+    </div>
+    <div class="ai-grid">
+      <div class="video-card reveal" id="filmCard" role="button" tabindex="0" aria-label="播放 AI 短片《牛来自海上》">
+        <span class="award-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="6"/><path d="M15.5 13 17 22l-5-3-5 3 1.5-9"/></svg>
+          阿那亚国际电影周 · 海浪电影周主题活动 · 黑客松终审 20 强
+        </span>
+        <video id="film" preload="metadata" playsinline poster="assets/p10_poster.jpg">
+          <source src="assets/video_short.mp4" type="video/mp4">
+        </video>
+        <div class="playbtn" id="filmPlay">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72a1 1 0 0 0 1.5.86l11-6.86a1 1 0 0 0 0-1.72l-11-6.86a1 1 0 0 0-1.5.86Z"/></svg>
+        </div>
+        <span class="dur" id="filmDur">05:00</span>
+      </div>
+      <div class="ai-detail reveal d1">
+        <h3>《牛来自海上》</h3>
+        <div class="sub">AI 短片 · 词元天工队 · 4 人团队 · 5 分钟成片</div>
+        <p>以海上传奇为蓝本的 AI 短片。我作为<strong style="color:var(--text)">核心创作者</strong>，<strong style="color:var(--text)">独立完成全片 90% 以上画面生成</strong>，主导分镜设计与提示词工程，将创意落到可渲染、可剪辑的视觉方案。</p>
+        <ul>
+          <li><b>赛事认可</b>：180+ 支报名队伍 → 50 支正赛 → 入围终审 20 强</li>
+          <li><b>角色锚定</b>：从瓦当纹样、秦铜盾等文物考据出发，完成角色与场景设定文档</li>
+          <li><b>渲染管线</b>：Seedance 2.5 视频生成；Midjourney + libtv image2 图像生成与角色锚定；DeepSeek 打磨分镜与文案</li>
+        </ul>
+        <div>
+          <span class="tag">即梦 Seedance 2.5</span><span class="tag">Midjourney</span><span class="tag">libtv</span><span class="tag">DeepSeek</span><span class="tag">剪映</span>
+        </div>
+        <a class="link-btn" href="assets/film-brief.pdf" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          下载参赛项目文档（PDF）
+        </a>
+        <p class="note">点击左侧视频可播放成片。下方为项目过程中的角色与场景锚定设计节选。</p>
+      </div>
+    </div>
+    <div class="still-grid reveal d2">
+      <figure><img src="assets/p1_still.webp" alt="瓦当纹样考据" loading="lazy"><figcaption>瓦当纹样考据</figcaption></figure>
+      <figure><img src="assets/p10_still.webp" alt="仙岛场景设定" loading="lazy"><figcaption>仙岛场景设定</figcaption></figure>
+      <figure><img src="assets/p12_still.webp" alt="海上传奇场景" loading="lazy"><figcaption>海上传奇场景</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<div class="divider" aria-hidden="true"></div>
+
+<!-- ===================== 板块 · 学术研究 ===================== -->
+<section class="block" id="research">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-flag">Research</span>
+      <h2 class="sec-title">学术研究<span class="cn">用户行为研究设计 · 心理学与社交媒体</span></h2>
+    </div>
+    <div class="research">
+      <div class="desc-side reveal">
+        <h3>微信朋友圈"仅三天可见"隐私行为研究</h3>
+        <div class="sub" style="font-size:13px;color:var(--gold);letter-spacing:.1em;margin-bottom:16px">基于霍桑效应的焦虑行为动机 · 研究设计</div>
+        <p>我负责<strong style="color:var(--text)">研究问题搭建设计与问卷</strong>。围绕社交媒体自我表露与隐私管理，构建"焦虑情绪 → 隐私评估 → 自我表露意愿 → 使用行为"的理论模型，提出 13 条研究假设。</p>
+        <ul>
+          <li><b>理论框架</b>：霍桑效应 + 隐私悖论 + 多重心理因素</li>
+          <li><b>研究方法</b>：线上线下问卷（问卷星）+ 访谈，SPSS / AMOS 分析</li>
+          <li><b>研究问题</b>：态度行为差异 · 影响机制 · 交互作用 · 隐私悖论体现</li>
+        </ul>
+        <div>
+          <span class="tag">心理学</span><span class="tag">问卷设计</span><span class="tag">SPSS / AMOS</span>
+        </div>
+      </div>
+      <div class="paper-stack reveal d1">
+        <figure class="paper">
+          <img src="assets/p21.webp" alt="概念模型构建图" loading="lazy">
+          <span class="paper-tag">概念模型构建</span>
+        </figure>
+        <figure class="paper">
+          <img src="assets/p23.webp" alt="研究问题与研究假设" loading="lazy">
+          <span class="paper-tag">研究问题</span>
+        </figure>
+      </div>
+    </div>
+    <div class="research-more reveal d1">
+      <div class="rm-card">
+        <div class="rm-tag">Quant · 课程实践 2024.10 – 2025.01</div>
+        <h4>跨文化广告策略分析</h4>
+        <p>设计跨文化广告认知问卷（文化价值观 / 广告偏好 / 购买意愿维度），回收 <b>300 份有效样本</b>（信度 0.85），SPSS 因子分析识别 4 类消费动机；拆解 5 个跨国快消品牌在华广告策略，输出本地化内容策略建议。</p>
+      </div>
+      <div class="rm-card">
+        <div class="rm-tag">Research · 校级重点学术项目 2024.09 – 2024.12</div>
+        <h4>非标准奢侈品舆情研究</h4>
+        <p>Python 爬取小红书 / 微博 / 抖音 <b>5000+ 条</b>评论，完成 3000+ 条有效数据清洗、去重与标注；SPSS 聚类划分 4 类核心关注人群，R 语言完成情感倾向可视化，量化 3 类高风险舆情议题，输出“内容引导 + 场景适配”解决方案。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 底部 ===================== -->
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-left reveal">
+        <h2>期待与你的团队<br>聊聊内容与增长。</h2>
+        <p>邵敬哲 · 北师香港浸会大学（BNBU）传播学（传媒管理方向）硕士。具备 AIGC 内容生产、用户洞察与项目统筹能力，期待新媒体运营 / 内容营销（AIGC 方向）或项目运营方向的面试交流。</p>
+      </div>
+      <div class="foot-right reveal d1">
+        <a href="assets/resume.pdf" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          下载简历 PDF
+        </a>
+        <a href="assets/writing-samples.pdf" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          作品与写作样本 PDF
+        </a>
+        <a href="mailto:u430232136@alumni.bnbu.edu.cn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          u430232136@alumni.bnbu.edu.cn
+        </a>
+        <a href="tel:18961390802">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.13.96.36 1.9.7 2.8a2 2 0 0 1-.45 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.45c.9.34 1.84.57 2.8.7A2 2 0 0 1 22 16.9Z"/></svg>
+          189 6139 0802
+        </a>
+        <a href="#top" style="color:var(--text-faint);font-size:13px">回到顶部 ↑</a>
+      </div>
+    </div>
+    <div class="foot-meta">
+      <span>© 2026 邵敬哲 · Portfolio</span>
+      <span>AI × Tools × Research</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  /* 顶栏滚动态 */
+  var bar=document.getElementById('topbar');
+  var onScroll=function(){bar.classList.toggle('scrolled',window.scrollY>24)};
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+  /* 滚动揭示 */
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+  },{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+  /* 不支持 IntersectionObserver 时直接显示全部内容 */
+  if(!('IntersectionObserver' in window)){
+    document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in')});
+  }
+
+  /* 导航高亮 */
+  var secs=['about','experience','skills','tools','biz','ai','research','contact'];
+  var navIo=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting){
+        document.querySelectorAll('nav a').forEach(function(a){
+          a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id);
+        });
+      }
+    });
+  },{rootMargin:'-45% 0px -50% 0px'});
+  secs.forEach(function(id){var el=document.getElementById(id);if(el)navIo.observe(el)});
+
+  /* 短片播放控制 */
+  var film=document.getElementById('film');
+  var card=document.getElementById('filmCard');
+  var play=document.getElementById('filmPlay');
+  var dur=document.getElementById('filmDur');
+  if(film){
+    film.addEventListener('loadedmetadata',function(){
+      var totalSeconds=Math.round(film.duration),m=Math.floor(totalSeconds/60),s=totalSeconds%60;
+      dur.textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+    });
+    function toggle(){
+      if(film.paused||film.ended){film.play();card.classList.add('playing')}
+      else{film.pause();card.classList.remove('playing')}
+    }
+    card.addEventListener('click',toggle);
+    card.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle()}});
+    film.addEventListener('pause',function(){card.classList.remove('playing')});
+    film.addEventListener('ended',function(){card.classList.remove('playing')});
+  }
+})();
+</script>
+</body>
+</html>
